@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suders/lib/utils/app_colors.dart';
+import 'package:suders/lib/utils/app_text_styles.dart';
+import 'package:suders/lib/utils/app_paddings.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({super.key});
@@ -13,34 +16,25 @@ class AdminDashboardScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF050816),
+        backgroundColor: AppColors.background,
         elevation: 0,
-        title: const Text(
-          'Admin Dashboard',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
+        title: Text('Admin Dashboard', style: AppTextStyles.title),
         actions: [
           TextButton.icon(
             onPressed: () {},
-            icon: const Icon(Icons.switch_account, color: Colors.white, size: 18),
-            label: const Text(
-              'Switch to User',
-              style: TextStyle(color: Colors.white),
-            ),
+            icon: const Icon(Icons.switch_account, color: AppColors.textMain, size: 18),
+            label: const Text('Switch to User', style: TextStyle(color: AppColors.textMain)),
           ),
         ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+          padding: AppPaddings.screen,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome, Admin',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 16),
+              Text('Welcome, Admin', style: AppTextStyles.title),
+              AppPaddings.betweenItems,
               Row(
                 children: [
                   Expanded(
@@ -60,21 +54,16 @@ class AdminDashboardScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'Manage',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 12),
+              AppPaddings.betweenSections,
+              Text('Manage', style: AppTextStyles.sectionTitle),
+              AppPaddings.betweenItems,
               Row(
                 children: [
                   Expanded(
                     child: _ManageCard(
                       label: 'Users',
                       icon: Icons.person_outline,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/admin/users');
-                      },
+                      onTap: () => Navigator.pushNamed(context, '/admin/users'),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -82,23 +71,19 @@ class AdminDashboardScreen extends StatelessWidget {
                     child: _ManageCard(
                       label: 'Courses',
                       icon: Icons.menu_book_outlined,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/admin/courses');
-                      },
+                      onTap: () => Navigator.pushNamed(context, '/admin/courses'),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
+              AppPaddings.betweenItems,
               Row(
                 children: [
                   Expanded(
                     child: _ManageCard(
                       label: 'Instructors',
                       icon: Icons.school_outlined,
-                      onTap: () {
-                        Navigator.pushNamed(context, '/admin/instructors');
-                      },
+                      onTap: () => Navigator.pushNamed(context, '/admin/instructors'),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -106,19 +91,14 @@ class AdminDashboardScreen extends StatelessWidget {
                     child: _ManageCard(
                       label: 'Flagged Content',
                       icon: Icons.flag_outlined,
-                      highlightColor: const Color(0xFFB45309),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/flagged');
-                      },
+                      highlightColor: AppColors.warning,
+                      onTap: () => Navigator.pushNamed(context, '/flagged'),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
-              const Text(
-                'Recent Activity',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
+              AppPaddings.betweenSections,
+              Text('Recent Activity', style: AppTextStyles.sectionTitle),
               const SizedBox(height: 8),
               Expanded(
                 child: ListView.builder(
@@ -126,11 +106,11 @@ class AdminDashboardScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
-                      padding: const EdgeInsets.all(14),
+                      padding: AppPaddings.card,
                       decoration: BoxDecoration(
-                        color: const Color(0xFF0F172A),
+                        color: AppColors.card,
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Color(0xFF1E293B)),
+                        border: Border.all(color: AppColors.border),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,17 +118,14 @@ class AdminDashboardScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF1D4ED8).withOpacity(0.2),
+                              color: AppColors.cardAlt,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(Icons.notifications, size: 20, color: Color(0xFF60A5FA)),
+                            child: const Icon(Icons.notifications, size: 20, color: AppColors.primary),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
-                            child: Text(
-                              recentActivities[index],
-                              style: const TextStyle(fontSize: 13, color: Colors.white70),
-                            ),
+                            child: Text(recentActivities[index], style: AppTextStyles.body),
                           ),
                         ],
                       ),
@@ -169,20 +146,16 @@ class _StatCard extends StatelessWidget {
   final String value;
   final IconData icon;
 
-  const _StatCard({
-    required this.title,
-    required this.value,
-    required this.icon,
-  });
+  const _StatCard({required this.title, required this.value, required this.icon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: AppPaddings.card,
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A),
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Color(0xFF1E293B)),
+        border: Border.all(color: AppColors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,19 +165,19 @@ class _StatCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF1D283A),
+                  color: AppColors.cardAlt,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Icon(icon, size: 18, color: Colors.white),
+                child: Icon(icon, size: 18, color: AppColors.textMain),
               ),
               const SizedBox(width: 8),
-              Text(title, style: const TextStyle(fontSize: 12, color: Colors.white70)),
+              Text(title, style: AppTextStyles.small),
             ],
           ),
           const SizedBox(height: 10),
           Text(
             value,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textMain),
           ),
         ],
       ),
@@ -218,27 +191,22 @@ class _ManageCard extends StatelessWidget {
   final VoidCallback onTap;
   final Color? highlightColor;
 
-  const _ManageCard({
-    required this.label,
-    required this.icon,
-    required this.onTap,
-    this.highlightColor,
-  });
+  const _ManageCard({required this.label, required this.icon, required this.onTap, this.highlightColor});
 
   @override
   Widget build(BuildContext context) {
-    final baseColor = highlightColor ?? const Color(0xFF0F172A);
+    final Color baseColor = highlightColor ?? AppColors.card;
 
     return InkWell(
       borderRadius: BorderRadius.circular(16),
       onTap: onTap,
       child: Container(
         height: 90,
-        padding: const EdgeInsets.all(14),
+        padding: AppPaddings.card,
         decoration: BoxDecoration(
           color: baseColor,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Color(0xFF1E293B)),
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,13 +217,10 @@ class _ManageCard extends StatelessWidget {
                 color: Colors.black.withOpacity(0.25),
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Icon(icon, size: 18, color: Colors.white),
+              child: Icon(icon, size: 18, color: AppColors.textMain),
             ),
             const Spacer(),
-            Text(
-              'Manage $label',
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-            ),
+            Text('Manage $label', style: AppTextStyles.small),
           ],
         ),
       ),

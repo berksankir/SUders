@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:suders/lib/utils/app_colors.dart';
+import 'package:suders/lib/utils/app_text_styles.dart';
+import 'package:suders/lib/utils/app_paddings.dart';
 
 class FlaggedItem {
   final String courseName;
@@ -31,7 +35,7 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
     ),
     FlaggedItem(
       courseName: 'NS209 – Astronomy',
-      summary: 'Review text contains inappropriate language according to multiple users.',
+      summary: 'Review contains inappropriate language.',
       reason: 'Inappropriate Language',
     ),
     FlaggedItem(
@@ -44,7 +48,6 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
   List<FlaggedItem> get filteredItems {
     if (_searchText.isEmpty) return _items;
     final q = _searchText.toLowerCase();
-
     return _items.where((item) {
       return item.courseName.toLowerCase().contains(q) ||
           item.summary.toLowerCase().contains(q) ||
@@ -53,21 +56,11 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
   }
 
   void _approve(FlaggedItem item) {
-    setState(() {
-      _items.remove(item);
-    });
+    setState(() => _items.remove(item));
   }
 
   void _remove(FlaggedItem item) {
-    setState(() {
-      _items.remove(item);
-    });
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+    setState(() => _items.remove(item));
   }
 
   @override
@@ -76,61 +69,56 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF050816),
+        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textMain),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Flagged Content',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Flagged Content', style: TextStyle(color: AppColors.textMain, fontWeight: FontWeight.bold)),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+        padding: AppPaddings.screen,
         child: Column(
           children: [
             TextField(
               controller: _searchController,
-              style: const TextStyle(fontSize: 14),
+              style: const TextStyle(color: AppColors.textMain),
               decoration: InputDecoration(
                 hintText: 'Search content',
+                hintStyle: const TextStyle(fontSize: 13, color: AppColors.textMuted),
                 filled: true,
-                fillColor: const Color(0xFF0F172A),
-                prefixIcon: const Icon(Icons.search, size: 20),
+                fillColor: AppColors.card,
+                prefixIcon: const Icon(Icons.search, size: 20, color: AppColors.textSecondary),
                 suffixIcon: _searchText.isEmpty
                     ? null
                     : IconButton(
-                  icon: const Icon(Icons.clear, size: 18),
+                  icon: const Icon(Icons.clear, size: 18, color: AppColors.textSecondary),
                   onPressed: () {
                     _searchController.clear();
                     setState(() => _searchText = '');
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xFF1F2937)),
+                  borderSide: const BorderSide(color: AppColors.borderSoft),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xFF1F2937)),
+                  borderSide: const BorderSide(color: AppColors.borderSoft),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Color(0xFF2563EB)),
+                  borderSide: const BorderSide(color: AppColors.primary),
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              onChanged: (v) => setState(() => _searchText = v),
+              onChanged: (value) => setState(() => _searchText = value),
             ),
             const SizedBox(height: 12),
             Expanded(
               child: items.isEmpty
                   ? const Center(
-                child: Text(
-                  'No flagged content.',
-                  style: TextStyle(color: Colors.white70),
-                ),
+                child: Text('No flagged content.', style: TextStyle(color: AppColors.textSecondary)),
               )
                   : ListView.builder(
                 itemCount: items.length,
@@ -139,45 +127,28 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
 
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
-                    padding: const EdgeInsets.all(14),
+                    padding: AppPaddings.card,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF0F172A),
+                      color: AppColors.card,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Color(0xFF1E293B)),
+                      border: Border.all(color: AppColors.border),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          item.courseName,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        Text(item.courseName,
+                            style: const TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textMain)),
                         const SizedBox(height: 6),
-                        Text(
-                          item.summary,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Colors.white70,
-                          ),
-                        ),
+                        Text(item.summary, style: AppTextStyles.body, maxLines: 3, overflow: TextOverflow.ellipsis),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.flag, size: 16, color: Color(0xFFEF4444)),
+                            const Icon(Icons.flag, size: 16, color: AppColors.danger),
                             const SizedBox(width: 6),
                             Expanded(
-                              child: Text(
-                                'Reason: ${item.reason}',
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFFEF4444),
-                                ),
-                              ),
+                              child: Text('Reason: ${item.reason}',
+                                  style: const TextStyle(fontSize: 12, color: AppColors.danger)),
                             ),
                           ],
                         ),
@@ -188,8 +159,7 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
                             ElevatedButton(
                               onPressed: () => _approve(item),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF16A34A),
-                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.success,
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               ),
                               child: const Text('Approve'),
@@ -198,8 +168,7 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
                             ElevatedButton(
                               onPressed: () => _remove(item),
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFDC2626),
-                                foregroundColor: Colors.white,
+                                backgroundColor: AppColors.danger,
                                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                               ),
                               child: const Text('Remove'),
