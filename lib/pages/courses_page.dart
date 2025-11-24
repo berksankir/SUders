@@ -201,8 +201,8 @@ class _CourseCard extends StatelessWidget {
           context,
           '/courseNotes',
           arguments: {
-            'code': course.code,
-            'name': course.title,
+            'courseCode': course.code,    // Changed from 'code'
+            'courseName': course.title,   // Changed from 'name'
           },
         );
       },
