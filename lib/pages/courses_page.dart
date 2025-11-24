@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'course_notes_page.dart';
-import 'upload_notes_page.dart';
 
 class CoursesPage extends StatelessWidget {
   const CoursesPage({super.key});
@@ -56,12 +54,8 @@ class CoursesPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: primary,
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => UploadNotesPage(), // const YOK
-            ),
-          );
+          // ✅ FAB → Upload Notes (NAMED NAVIGATION)
+          Navigator.pushNamed(context, '/uploadNotes');
         },
         child: const Icon(Icons.add, size: 30),
       ),
@@ -85,7 +79,6 @@ class CoursesPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // üst title bar
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
               child: Row(
@@ -116,7 +109,7 @@ class CoursesPage extends StatelessWidget {
               ),
             ),
 
-            // search bar
+            // Search Bar
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: TextField(
@@ -149,7 +142,7 @@ class CoursesPage extends StatelessWidget {
               ),
             ),
 
-            // course list
+            // Course Cards
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
@@ -187,6 +180,10 @@ class _Course {
   });
 }
 
+// ----------------------------------
+// COURSE CARD (NAMED ROUTE FIXED)
+// ----------------------------------
+
 class _CourseCard extends StatelessWidget {
   final _Course course;
 
@@ -199,14 +196,14 @@ class _CourseCard extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        Navigator.push(
+        // ✅ Course Card → Course Notes (NAMED + ARGUMENTS)
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (_) => CourseNotesPage(
-              courseCode: course.code,
-              courseName: course.title,
-            ),
-          ),
+          '/courseNotes',
+          arguments: {
+            'code': course.code,
+            'name': course.title,
+          },
         );
       },
       borderRadius: BorderRadius.circular(16),
@@ -261,13 +258,12 @@ class _CourseCard extends StatelessWidget {
               height: 28,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                color:
-                    (course.faculty == 'FENS'
-                            ? accent
-                            : course.faculty == 'FASS'
+                color: (course.faculty == 'FENS'
+                        ? accent
+                        : course.faculty == 'FASS'
                             ? Colors.purple
                             : Colors.green)
-                        .withOpacity(0.2),
+                    .withOpacity(0.2),
                 borderRadius: BorderRadius.circular(999),
               ),
               alignment: Alignment.center,
@@ -277,8 +273,8 @@ class _CourseCard extends StatelessWidget {
                   color: course.faculty == 'FENS'
                       ? accent
                       : course.faculty == 'FASS'
-                      ? Colors.purple
-                      : Colors.green,
+                          ? Colors.purple
+                          : Colors.green,
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
                 ),
@@ -308,9 +304,7 @@ class _NavItem extends StatelessWidget {
 
     return Expanded(
       child: InkWell(
-        onTap: () {
-          // şimdilik sadece UI, navigation yok
-        },
+        onTap: () {},
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
