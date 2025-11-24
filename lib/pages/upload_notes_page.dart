@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class UploadNotesPage extends StatefulWidget {
   const UploadNotesPage({super.key});
@@ -22,24 +25,21 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
 
   @override
   Widget build(BuildContext context) {
-    const backgroundDark = Color(0xFF101622);
-    const surfaceDark = Color(0xFF192233);
-    const borderDark = Color(0xFF324467);
-    const primary = Color(0xFF004B8D);
+    const sabanciBlue = Color(0xFF004B8D);
 
     return Scaffold(
-      backgroundColor: backgroundDark,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: surfaceDark,
+        backgroundColor: AppColors.cardAlt,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context), // ✔️ Named uyumlu
         ),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Upload Notes',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.sectionTitle,
         ),
       ),
       body: Stack(
@@ -58,9 +58,9 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                       vertical: 24,
                     ),
                     decoration: BoxDecoration(
-                      color: surfaceDark,
+                      color: AppColors.cardAlt,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: borderDark, width: 2),
+                      border: Border.all(color: AppColors.border, width: 2),
                     ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -70,30 +70,23 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                           height: 64,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: primary.withOpacity(0.15),
+                            color: sabanciBlue.withOpacity(0.15),
                           ),
                           child: const Icon(
                             Icons.cloud_upload_outlined,
                             size: 36,
-                            color: primary,
+                            color: sabanciBlue,
                           ),
                         ),
                         const SizedBox(height: 12),
-                        const Text(
+                        Text(
                           'Drag your file here',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: AppTextStyles.sectionTitle,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Supports PDF, DOCX, PPTX, JPG. Max 25MB.',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
+                          style: AppTextStyles.body,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 16),
@@ -102,7 +95,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                           child: ElevatedButton(
                             onPressed: () {},
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: primary,
+                              backgroundColor: sabanciBlue,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
@@ -123,13 +116,9 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                   const SizedBox(height: 20),
 
                   // COURSE DROPDOWN
-                  const Text(
+                  Text(
                     'Course',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.sectionTitle,
                   ),
                   const SizedBox(height: 6),
                   _DropdownField<String>(
@@ -148,13 +137,9 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                   const SizedBox(height: 16),
 
                   // TERM
-                  const Text(
+                  Text(
                     'Term',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.sectionTitle,
                   ),
                   const SizedBox(height: 6),
                   _DropdownField<String>(
@@ -169,13 +154,9 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                   const SizedBox(height: 16),
 
                   // DESCRIPTION
-                  const Text(
+                  Text(
                     'Description',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: AppTextStyles.sectionTitle,
                   ),
                   const SizedBox(height: 6),
                   TextField(
@@ -184,30 +165,27 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                     decoration: InputDecoration(
                       hintText:
                           'Add a helpful description, e.g., Midterm 1 notes, key concepts...',
-                      hintStyle: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 13,
-                      ),
+                      hintStyle: AppTextStyles.body,
                       filled: true,
-                      fillColor: surfaceDark,
+                      fillColor: AppColors.cardAlt,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: borderDark),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
-                        borderSide: BorderSide(color: borderDark),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(14),
                         borderSide: const BorderSide(
-                          color: primary,
+                          color: sabanciBlue,
                           width: 1.5,
                         ),
                       ),
                       contentPadding: const EdgeInsets.all(12),
                     ),
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: AppColors.textMain),
                   ),
 
                   const SizedBox(height: 18),
@@ -216,7 +194,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: surfaceDark,
+                      color: AppColors.cardAlt,
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: Row(
@@ -228,18 +206,12 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                             children: [
                               Text(
                                 'Post Anonymously',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                                style: AppTextStyles.sectionTitle,
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
                                 'Your name will be hidden from this post.',
-                                style: TextStyle(
-                                  color: Color(0xFFA0AEC0),
-                                  fontSize: 12,
-                                ),
+                                style: AppTextStyles.small,
                               ),
                             ],
                           ),
@@ -249,8 +221,8 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                           onChanged: (val) {
                             setState(() => isAnonymous = val);
                           },
-                          activeThumbColor: Colors.white,
-                          activeTrackColor: primary,
+                          activeThumbColor: AppColors.textMain,
+                          activeTrackColor: sabanciBlue,
                         ),
                       ],
                     ),
@@ -273,25 +245,25 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: surfaceDark,
-                  border: Border(top: BorderSide(color: borderDark)),
+                  color: AppColors.cardAlt,
+                  border: Border(top: BorderSide(color: AppColors.border)),
                 ),
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: primary,
+                      backgroundColor: sabanciBlue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
                       elevation: 6,
                     ),
-                    child: const Text(
+                    child: Text(
                       'Upload Notes',
-                      style: TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.body.copyWith(
                         fontWeight: FontWeight.bold,
+                        color: AppColors.textMain,
                       ),
                     ),
                   ),
@@ -320,26 +292,23 @@ class _DropdownField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const surfaceDark = Color(0xFF192233);
-    const borderDark = Color(0xFF324467);
-
     return Container(
       decoration: BoxDecoration(
-        color: surfaceDark,
+        color: AppColors.cardAlt,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: borderDark),
+        border: Border.all(color: AppColors.border),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<T>(
           value: value,
           isExpanded: true,
-          dropdownColor: surfaceDark,
-          icon: const Icon(Icons.expand_more, color: Colors.grey),
-          style: const TextStyle(color: Colors.white, fontSize: 14),
+          dropdownColor: AppColors.cardAlt,
+          icon: const Icon(Icons.expand_more, color: AppColors.textSecondary),
+          style: TextStyle(color: AppColors.textMain, fontSize: 14),
           hint: Text(
             hintText,
-            style: TextStyle(color: Colors.grey, fontSize: 13),
+            style: AppTextStyles.body,
           ),
           items: items
               .map((e) =>

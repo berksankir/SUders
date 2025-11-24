@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-/// Aynı tema renkleri (Academic Calendar ekranıyla uyumlu)
-const Color kPrimary = Color(0xFF135BEC);
-const Color kBackgroundLight = Color(0xFFF6F6F8);
-const Color kBackgroundDark = Color(0xFF101622);
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class SavedNotesScreen extends StatefulWidget {
   static const String routeName = "Saved_Notes_Screen";
@@ -19,22 +17,20 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
-      backgroundColor: isDark ? kBackgroundDark : kBackgroundLight,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: [
-            _buildTopBar(isDark),
+            _buildTopBar(),
             Expanded(
               child: ListView(
                 children: [
-                  _buildProfileHeader(isDark),
-                  _buildSegmentedTabs(isDark),
+                  _buildProfileHeader(),
+                  _buildSegmentedTabs(),
                   _isUploadedTab
-                      ? _buildUploadedNotesList(isDark)
-                      : _buildSavedNotesEmptyState(isDark),
+                      ? _buildUploadedNotesList()
+                      : _buildSavedNotesEmptyState(),
                 ],
               ),
             ),
@@ -46,11 +42,11 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   // ──────────────── TOP APP BAR ────────────────
 
-  Widget _buildTopBar(bool isDark) {
+  Widget _buildTopBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8)
           .copyWith(bottom: 4),
-      color: isDark ? kBackgroundDark : kBackgroundLight,
+      color: AppColors.background,
       child: Row(
         children: [
           SizedBox(
@@ -60,10 +56,10 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/courses');
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 size: 24,
-                color: isDark ? Colors.grey.shade300 : const Color(0xFF4A4A4A),
+                color: AppColors.textMain,
               ),
             ),
           ),
@@ -71,12 +67,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             child: Center(
               child: Text(
                 'Profile',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.3,
-                  color: isDark ? Colors.white : const Color(0xFF4A4A4A),
-                ),
+                style: AppTextStyles.sectionTitle,
               ),
             ),
           ),
@@ -84,17 +75,15 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             onPressed: () {
               Navigator.pushNamed(context, '/admin/dashboard');
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.switch_account,
               size: 18,
-              color: isDark ? Colors.white : const Color(0xFF4A4A4A),
+              color: AppColors.textMain,
             ),
             label: Text(
               'Switch to Admin',
-              style: TextStyle(
-                fontSize: 12,
-                color: isDark ? Colors.white : const Color(0xFF4A4A4A),
-                fontWeight: FontWeight.w500,
+              style: AppTextStyles.small.copyWith(
+                color: AppColors.textMain,
               ),
             ),
             style: TextButton.styleFrom(
@@ -110,9 +99,9 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   // ──────────────── PROFILE HEADER ────────────────
 
-  Widget _buildProfileHeader(bool isDark) {
+  Widget _buildProfileHeader() {
     return Container(
-      color: isDark ? kBackgroundDark : kBackgroundLight,
+      color: AppColors.background,
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,22 +122,12 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
                   children: [
                     Text(
                       'Ayşe Yılmaz',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: -0.3,
-                        color: isDark ? Colors.white : const Color(0xFF4A4A4A),
-                      ),
+                      style: AppTextStyles.title,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Computer Science, 2025',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: isDark
-                            ? Colors.grey.shade400
-                            : Colors.grey.shade500,
-                      ),
+                      style: AppTextStyles.body,
                     ),
                   ],
                 ),
@@ -164,7 +143,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
                 // Edit profile action
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: kPrimary,
+                backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -188,11 +167,9 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   // ──────────────── SEGMENTED TABS ────────────────
 
-  Widget _buildSegmentedTabs(bool isDark) {
-    final bgContainer =
-        isDark ? Colors.grey.shade900 : Colors.grey.shade300.withOpacity(0.6);
-    final inactiveText =
-        isDark ? Colors.grey.shade300 : const Color(0xFF4A4A4A);
+  Widget _buildSegmentedTabs() {
+    final bgContainer = AppColors.cardAlt;
+    final inactiveText = AppColors.textSecondary;
 
     Widget buildTab(String label, bool selected) {
       return Expanded(
@@ -213,7 +190,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             alignment: Alignment.center,
             margin: const EdgeInsets.symmetric(horizontal: 2),
             decoration: BoxDecoration(
-              color: selected ? kPrimary : Colors.transparent,
+              color: selected ? AppColors.primary : Colors.transparent,
               borderRadius: BorderRadius.circular(6),
               boxShadow: selected
                   ? [
@@ -240,7 +217,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
     }
 
     return Container(
-      color: isDark ? kBackgroundDark : kBackgroundLight,
+      color: AppColors.background,
       padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
       child: Container(
         height: 40,
@@ -261,30 +238,26 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   // ──────────────── UPLOADED NOTES LİSTESİ ────────────────
 
-  Widget _buildUploadedNotesList(bool isDark) {
-    final dividerColor =
-        isDark ? const Color(0xFF262A35) : Colors.grey.shade300;
+  Widget _buildUploadedNotesList() {
+    final dividerColor = AppColors.border;
 
     return Container(
-      color: isDark ? kBackgroundDark : kBackgroundLight,
+      color: AppColors.background,
       child: Column(
         children: [
           _buildNoteListItem(
-            isDark: isDark,
             icon: Icons.picture_as_pdf,
             title: 'CS 301 - Lecture 5 Notes',
             subtitle: 'Uploaded: 15 Oct 2023',
             dividerColor: dividerColor,
           ),
           _buildNoteListItem(
-            isDark: isDark,
             icon: Icons.description,
             title: 'PSY 101 - Midterm Study Guide',
             subtitle: 'Uploaded: 03 Oct 2023',
             dividerColor: dividerColor,
           ),
           _buildNoteListItem(
-            isDark: isDark,
             icon: Icons.picture_as_pdf,
             title: 'MATH 201 - Linear Algebra Concepts',
             subtitle: 'Uploaded: 28 Sep 2023',
@@ -296,16 +269,13 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
   }
 
   Widget _buildNoteListItem({
-    required bool isDark,
     required IconData icon,
     required String title,
     required String subtitle,
     required Color dividerColor,
   }) {
-    final textMainColor =
-        isDark ? Colors.white : const Color(0xFF4A4A4A); // neutral-gray
-    final textSubColor =
-        isDark ? Colors.grey.shade400 : Colors.grey.shade500;
+    final textMainColor = AppColors.textMain;
+    final textSubColor = AppColors.textSecondary;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -320,7 +290,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: kPrimary,
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(
@@ -361,10 +331,10 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             onPressed: () {
               // more actions
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
               size: 24,
-              color: isDark ? Colors.grey.shade400 : const Color(0xFF4A4A4A),
+              color: AppColors.textSecondary,
             ),
           ),
         ],
@@ -374,34 +344,27 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
 
   // ──────────────── SAVED NOTES EMPTY STATE ────────────────
 
-  Widget _buildSavedNotesEmptyState(bool isDark) {
+  Widget _buildSavedNotesEmptyState() {
     return Container(
-      color: isDark ? kBackgroundDark : kBackgroundLight,
+      color: AppColors.background,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 40),
       child: Column(
         children: [
-          Icon(
+          const Icon(
             Icons.cloud_upload,
             size: 64,
-            color: isDark ? Colors.grey.shade500 : Colors.grey.shade400,
+            color: AppColors.textSecondary,
           ),
           const SizedBox(height: 16),
           Text(
             'No Notes Yet',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: isDark ? Colors.white : const Color(0xFF4A4A4A),
-            ),
+            style: AppTextStyles.sectionTitle,
           ),
           const SizedBox(height: 6),
           Text(
             "You haven't uploaded any notes yet. Tap the '+' button to share your first note!",
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 13,
-              color: isDark ? Colors.grey.shade400 : Colors.grey.shade500,
-            ),
+            style: AppTextStyles.body,
           ),
         ],
       ),

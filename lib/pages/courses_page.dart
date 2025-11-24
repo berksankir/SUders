@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class CoursesPage extends StatelessWidget {
   const CoursesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const backgroundDark = Color(0xFF101622);
-    const surfaceDark = Color(0xFF182131);
-    const primary = Color(0xFF135BEC);
     const sabanciBlue = Color(0xFF004B8D);
 
     final courses = [
@@ -49,18 +49,18 @@ class CoursesPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: backgroundDark,
+      backgroundColor: AppColors.background,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: primary,
+        backgroundColor: AppColors.primary,
         onPressed: () {
           // ✅ FAB → Upload Notes (NAMED NAVIGATION)
           Navigator.pushNamed(context, '/uploadNotes');
         },
-        child: const Icon(Icons.add, size: 30),
+        child: const Icon(Icons.add, size: 30, color: AppColors.textMain),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: surfaceDark.withOpacity(0.9),
+        color: AppColors.card.withOpacity(0.9),
         shape: const CircularNotchedRectangle(),
         child: SizedBox(
           height: 72,
@@ -95,14 +95,10 @@ class CoursesPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: Text(
                       'Courses',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: AppTextStyles.title,
                     ),
                   ),
                   InkWell(
@@ -114,12 +110,12 @@ class CoursesPage extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: surfaceDark.withOpacity(0.9),
+                        color: AppColors.card.withOpacity(0.9),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
                         Icons.person_outline,
-                        color: Colors.white,
+                        color: AppColors.textMain,
                       ),
                     ),
                   ),
@@ -131,22 +127,23 @@ class CoursesPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
               child: TextField(
+                style: TextStyle(color: AppColors.textMain),
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: surfaceDark,
+                  fillColor: AppColors.card,
                   hintText: 'Search by course code or name',
                   hintStyle: TextStyle(
-                    color: Colors.grey.shade400,
+                    color: AppColors.textMuted,
                     fontSize: 14,
                   ),
-                  prefixIcon: const Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Colors.grey.shade700),
+                    borderSide: BorderSide(color: AppColors.border),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: Colors.grey.shade700),
+                    borderSide: BorderSide(color: AppColors.border),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -156,7 +153,6 @@ class CoursesPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                style: const TextStyle(color: Colors.white),
               ),
             ),
 
@@ -209,7 +205,6 @@ class _CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const cardColor = Color(0xFF182131);
     const accent = Color(0xFFFDB813);
 
     return InkWell(
@@ -228,9 +223,9 @@ class _CourseCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: cardColor,
+          color: AppColors.card,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.grey.shade800),
+          border: Border.all(color: AppColors.border),
           boxShadow: const [
             BoxShadow(
               blurRadius: 4,
@@ -257,16 +252,12 @@ class _CourseCard extends StatelessWidget {
                 children: [
                   Text(
                     course.code,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
+                    style: AppTextStyles.sectionTitle,
                   ),
                   const SizedBox(height: 2),
                   Text(
                     course.title,
-                    style: TextStyle(color: Colors.grey.shade400, fontSize: 13),
+                    style: AppTextStyles.body,
                   ),
                 ],
               ),
@@ -320,7 +311,7 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? const Color(0xFF135BEC) : Colors.grey.shade400;
+    final color = isActive ? AppColors.primary : AppColors.textSecondary;
 
     return Expanded(
       child: InkWell(

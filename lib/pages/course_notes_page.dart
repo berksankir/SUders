@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class CourseNotesPage extends StatefulWidget {
   final String courseCode;
@@ -44,14 +47,10 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
 
   @override
   Widget build(BuildContext context) {
-    const backgroundDark = Color(0xFF101622);
-    const cardColor = Color(0xFF182131);
-    const primary = Color(0xFF135BEC);
-
     return Scaffold(
-      backgroundColor: backgroundDark,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: backgroundDark,
+        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -60,7 +59,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
         centerTitle: true,
         title: Text(
           '${widget.courseCode} - ${widget.courseName}',
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: AppTextStyles.sectionTitle,
         ),
         actions: const [
           Padding(
@@ -105,13 +104,9 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Course Notes',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.title,
                   ),
                   const SizedBox(height: 12),
 
@@ -122,7 +117,6 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                           padding: const EdgeInsets.only(bottom: 12.0),
                           child: _NoteCard(
                             note: note,
-                            cardColor: cardColor,
                             onDownload: () {},
                             onUpvote: () {
                               setState(() {
@@ -156,7 +150,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: backgroundDark.withOpacity(0.9),
+                  color: AppColors.background.withOpacity(0.9),
                   boxShadow: const [
                     BoxShadow(
                       color: Colors.black38,
@@ -177,7 +171,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                       style: TextStyle(fontSize: 16),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: primary,
+                      backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                       ),
@@ -215,14 +209,12 @@ class _Note {
 
 class _NoteCard extends StatelessWidget {
   final _Note note;
-  final Color cardColor;
   final VoidCallback onDownload;
   final VoidCallback onUpvote;
   final VoidCallback onDownvote;
 
   const _NoteCard({
     required this.note,
-    required this.cardColor,
     required this.onDownload,
     required this.onUpvote,
     required this.onDownvote,
@@ -233,7 +225,7 @@ class _NoteCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: cardColor,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
         boxShadow: const [
           BoxShadow(blurRadius: 8, offset: Offset(0, 4), color: Colors.black26),
@@ -244,8 +236,8 @@ class _NoteCard extends StatelessWidget {
         children: [
           Text(
             note.termLabel,
-            style: const TextStyle(
-              color: Color(0xFF135BEC),
+            style: TextStyle(
+              color: AppColors.primary,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
@@ -253,16 +245,12 @@ class _NoteCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             note.title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTextStyles.sectionTitle,
           ),
           const SizedBox(height: 2),
           Text(
             'Uploaded by ${note.uploader}',
-            style: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 13),
+            style: AppTextStyles.small,
           ),
           const SizedBox(height: 10),
           Row(
@@ -275,18 +263,15 @@ class _NoteCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.arrow_upward,
                           size: 18,
-                          color: Colors.grey,
+                          color: AppColors.textSecondary,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           note.upVotes.toString(),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
+                          style: AppTextStyles.small,
                         ),
                       ],
                     ),
@@ -297,18 +282,15 @@ class _NoteCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.arrow_downward,
                           size: 18,
-                          color: Colors.grey,
+                          color: AppColors.textSecondary,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           note.downVotes.toString(),
-                          style: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 13,
-                          ),
+                          style: AppTextStyles.small,
                         ),
                       ],
                     ),
@@ -317,7 +299,7 @@ class _NoteCard extends StatelessWidget {
               ),
               TextButton.icon(
                 style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFF1F2937),
+                  backgroundColor: AppColors.cardAlt,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
                     vertical: 6,
@@ -327,10 +309,10 @@ class _NoteCard extends StatelessWidget {
                   ),
                 ),
                 onPressed: onDownload,
-                icon: const Icon(Icons.download, color: Colors.white, size: 18),
-                label: const Text(
+                icon: const Icon(Icons.download, color: AppColors.textMain, size: 18),
+                label: Text(
                   'Download',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
+                  style: AppTextStyles.small.copyWith(color: AppColors.textMain),
                 ),
               ),
             ],
@@ -358,11 +340,9 @@ class _DropdownBox<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const boxColor = Color(0xFF182131);
-
     return Container(
       decoration: BoxDecoration(
-        color: boxColor,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -370,9 +350,9 @@ class _DropdownBox<T> extends StatelessWidget {
         child: DropdownButton<T>(
           value: value,
           isExpanded: true,
-          dropdownColor: boxColor,
-          icon: const Icon(Icons.expand_more, color: Colors.grey),
-          style: const TextStyle(color: Colors.white),
+          dropdownColor: AppColors.card,
+          icon: const Icon(Icons.expand_more, color: AppColors.textSecondary),
+          style: TextStyle(color: AppColors.textMain),
           items: items
               .map(
                 (e) =>

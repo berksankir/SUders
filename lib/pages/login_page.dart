@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,9 +16,10 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          padding: AppPaddings.screen,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -24,45 +28,49 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF161B28),
+                    color: AppColors.cardAlt,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: const Icon(
                     Icons.school,
                     size: 32,
-                    color: Color(0xFF1061FF),
+                    color: AppColors.primary,
                   ),
                 ),
               ),
               const SizedBox(height: 24),
-              const Center(
+              Center(
                 child: Text(
                   "Join the SU Community",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.title,
                 ),
               ),
               const SizedBox(height: 8),
               Center(
                 child: Text(
                   "For Sabancı University students only.",
-                  style: TextStyle(color: Colors.grey),
+                  style: AppTextStyles.body,
                 ),
               ),
               const SizedBox(height: 40),
-              const Text(
+              Text(
                 "Full Name",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: AppTextStyles.sectionTitle,
               ),
               const SizedBox(height: 8),
               TextFormField(
-                decoration: const InputDecoration(
+                style: TextStyle(color: AppColors.textMain),
+                decoration: InputDecoration(
                   hintText: "Enter your full name",
+                  hintStyle: TextStyle(color: AppColors.textMuted),
+                  filled: true,
+                  fillColor: AppColors.card,
                 ),
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 "SU Email",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: AppTextStyles.sectionTitle,
               ),
               const SizedBox(height: 8),
               Row(
@@ -70,22 +78,26 @@ class _LoginPageState extends State<LoginPage> {
                   Expanded(
                     flex: 4,
                     child: TextFormField(
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: AppColors.textMain),
+                      decoration: InputDecoration(
                         hintText: "yourusername",
+                        hintStyle: TextStyle(color: AppColors.textMuted),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(12),
                             bottomLeft: Radius.circular(12),
                           ),
-                          borderSide: BorderSide(color: Color(0xFF2D3748)),
+                          borderSide: BorderSide(color: AppColors.border),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(12),
                             bottomLeft: Radius.circular(12),
                           ),
-                          borderSide: BorderSide(color: Color(0xFF1061FF)),
+                          borderSide: BorderSide(color: AppColors.primary),
                         ),
+                        filled: true,
+                        fillColor: AppColors.card,
                       ),
                     ),
                   ),
@@ -94,36 +106,38 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2D3748),
+                      color: AppColors.cardAlt,
                       borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(12),
                         bottomRight: Radius.circular(12),
                       ),
-                      border: Border.all(color: const Color(0xFF2D3748)),
+                      border: Border.all(color: AppColors.border),
                     ),
-                    child: const Text(
+                    child: Text(
                       "@sabanciuniv.edu",
-                      style: TextStyle(color: Colors.white70),
+                      style: TextStyle(color: AppColors.textSecondary),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              const Text(
+              Text(
                 "Password",
-                style: TextStyle(fontWeight: FontWeight.w600),
+                style: AppTextStyles.sectionTitle,
               ),
               const SizedBox(height: 8),
               TextFormField(
                 obscureText: !_isPasswordVisible,
+                style: TextStyle(color: AppColors.textMain),
                 decoration: InputDecoration(
                   hintText: "Create a secure password",
+                  hintStyle: TextStyle(color: AppColors.textMuted),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _isPasswordVisible
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: Colors.grey,
+                      color: AppColors.textSecondary,
                     ),
                     onPressed: () {
                       setState(() {
@@ -142,17 +156,16 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushNamed(context, '/verification');
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1061FF),
+                    backgroundColor: AppColors.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Create Account",
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyles.body.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: AppColors.textMain,
                     ),
                   ),
                 ),
@@ -164,14 +177,14 @@ class _LoginPageState extends State<LoginPage> {
                     Navigator.pushNamed(context, '/welcomeBack');
                   },
                   child: RichText(
-                    text: const TextSpan(
+                    text: TextSpan(
                       text: "Already have an account? ",
-                      style: TextStyle(color: Colors.grey),
+                      style: TextStyle(color: AppColors.textSecondary),
                       children: [
                         TextSpan(
                           text: "Log In",
                           style: TextStyle(
-                            color: Color(0xFF1061FF),
+                            color: AppColors.primary,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 //for the demo, we made the verification code  "111111" this is only for the demo and not the final form of verification page
 class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
@@ -36,9 +39,9 @@ class _VerificationPageState extends State<VerificationPage> {
     
     if (enteredCode.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter all 6 digits"),
-          backgroundColor: Colors.red,
+        SnackBar(
+          content: const Text("Please enter all 6 digits"),
+          backgroundColor: AppColors.danger,
         ),
       );
       return;
@@ -46,9 +49,9 @@ class _VerificationPageState extends State<VerificationPage> {
 
     if (enteredCode == _demoCode) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Verification successful!"),
-          backgroundColor: Colors.green,
+        SnackBar(
+          content: const Text("Verification successful!"),
+          backgroundColor: AppColors.success,
         ),
       );
       // Navigate to welcome back page after a short delay
@@ -59,9 +62,9 @@ class _VerificationPageState extends State<VerificationPage> {
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Invalid verification code. Please try again."),
-          backgroundColor: Colors.red,
+        SnackBar(
+          content: const Text("Invalid verification code. Please try again."),
+          backgroundColor: AppColors.danger,
         ),
       );
       // Clear all fields
@@ -76,29 +79,30 @@ class _VerificationPageState extends State<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textMain),
           onPressed: () => Navigator.pop(context),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: AppPaddings.screen,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 20),
-            const Text(
+            Text(
               "Enter Verification Code",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: AppTextStyles.title,
             ),
             const SizedBox(height: 12),
             Text(
               "Enter the code sent to your\nSabancı University email.",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.grey[500], height: 1.5),
+              style: AppTextStyles.body.copyWith(height: 1.5),
             ),
             const SizedBox(height: 40),
             Row(
@@ -123,20 +127,23 @@ class _VerificationPageState extends State<VerificationPage> {
                       LengthLimitingTextInputFormatter(1),
                       FilteringTextInputFormatter.digitsOnly,
                     ],
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.textMain,
                     ),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.zero,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.grey.shade800),
+                        borderSide: BorderSide(color: AppColors.border),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFF1061FF)),
+                        borderSide: BorderSide(color: AppColors.primary),
                       ),
+                      filled: true,
+                      fillColor: AppColors.card,
                     ),
                   ),
                 );
@@ -148,7 +155,7 @@ class _VerificationPageState extends State<VerificationPage> {
               children: [
                 Text(
                   "Didn't get a code? ",
-                  style: TextStyle(color: Colors.grey[500]),
+                  style: AppTextStyles.body,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -158,10 +165,10 @@ class _VerificationPageState extends State<VerificationPage> {
                       ),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     "Resend",
-                    style: TextStyle(
-                      color: Color(0xFF1061FF),
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -173,10 +180,10 @@ class _VerificationPageState extends State<VerificationPage> {
               onTap: () {
                 Navigator.pushReplacementNamed(context, '/welcomeBack');
               },
-              child: const Text(
+              child: Text(
                 "Log In",
-                style: TextStyle(
-                  color: Color(0xFF1061FF),
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.primary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -188,17 +195,16 @@ class _VerificationPageState extends State<VerificationPage> {
               child: ElevatedButton(
                 onPressed: _verifyCode,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF1061FF),
+                  backgroundColor: AppColors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   "Verify",
-                  style: TextStyle(
-                    fontSize: 16,
+                  style: AppTextStyles.body.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: AppColors.textMain,
                   ),
                 ),
               ),
