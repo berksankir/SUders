@@ -23,7 +23,10 @@ class AdminDashboardScreen extends StatelessWidget {
           TextButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.switch_account, color: Colors.white, size: 18),
-            label: const Text('Switch to User', style: TextStyle(color: Colors.white)),
+            label: const Text(
+              'Switch to User',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
         ],
       ),
@@ -33,21 +36,35 @@ class AdminDashboardScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Welcome, Admin', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),
+              const Text(
+                'Welcome, Admin',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
-                    child: _StatCard(title: 'Total Users', value: '12,456', icon: Icons.people),
+                    child: _StatCard(
+                      title: 'Total Users',
+                      value: '12,456',
+                      icon: Icons.people,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: _StatCard(title: 'Active Users', value: '1,203', icon: Icons.check_circle),
+                    child: _StatCard(
+                      title: 'Active Users',
+                      value: '1,203',
+                      icon: Icons.check_circle,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 24),
-              const Text('Manage', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              const Text(
+                'Manage',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -55,7 +72,9 @@ class AdminDashboardScreen extends StatelessWidget {
                     child: _ManageCard(
                       label: 'Users',
                       icon: Icons.person_outline,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/admin/users');
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -63,7 +82,9 @@ class AdminDashboardScreen extends StatelessWidget {
                     child: _ManageCard(
                       label: 'Courses',
                       icon: Icons.menu_book_outlined,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/admin/courses');
+                      },
                     ),
                   ),
                 ],
@@ -75,7 +96,9 @@ class AdminDashboardScreen extends StatelessWidget {
                     child: _ManageCard(
                       label: 'Instructors',
                       icon: Icons.school_outlined,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/admin/instructors');
+                      },
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -92,7 +115,10 @@ class AdminDashboardScreen extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 24),
-              const Text('Recent Activity', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+              const Text(
+                'Recent Activity',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 8),
               Expanded(
                 child: ListView.builder(
@@ -104,7 +130,7 @@ class AdminDashboardScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: const Color(0xFF0F172A),
                         borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: const Color(0xFF1E293B)),
+                        border: Border.all(color: Color(0xFF1E293B)),
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,7 +155,7 @@ class AdminDashboardScreen extends StatelessWidget {
                     );
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -143,7 +169,11 @@ class _StatCard extends StatelessWidget {
   final String value;
   final IconData icon;
 
-  const _StatCard({required this.title, required this.value, required this.icon});
+  const _StatCard({
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +202,10 @@ class _StatCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
         ],
       ),
     );
@@ -185,7 +218,12 @@ class _ManageCard extends StatelessWidget {
   final VoidCallback onTap;
   final Color? highlightColor;
 
-  const _ManageCard({required this.label, required this.icon, required this.onTap, this.highlightColor});
+  const _ManageCard({
+    required this.label,
+    required this.icon,
+    required this.onTap,
+    this.highlightColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +252,10 @@ class _ManageCard extends StatelessWidget {
               child: Icon(icon, size: 18, color: Colors.white),
             ),
             const Spacer(),
-            Text('Manage $label', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500)),
+            Text(
+              'Manage $label',
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+            ),
           ],
         ),
       ),
