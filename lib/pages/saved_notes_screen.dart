@@ -1,37 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-class MyNotesApp extends StatelessWidget {
-  const MyNotesApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const primary = Color(0xFF135BEC);
-    const bgLight = Color(0xFFF6F6F8);
-    const bgDark = Color(0xFF101622);
-
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'My Notes',
-      themeMode: ThemeMode.system,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: primary, brightness: Brightness.light),
-        scaffoldBackgroundColor: bgLight,
-        textTheme: const TextTheme(),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: primary, brightness: Brightness.dark),
-        scaffoldBackgroundColor: bgDark,
-        textTheme: const TextTheme(),
-      ),
-      home: const MyNotesPage(),
-    );
-  }
-}
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class MyNotesPage extends StatefulWidget {
   const MyNotesPage({super.key});
@@ -76,7 +47,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
       _Folder(
         'CS 310',
         locked: true,
-        color: Theme.of(context).colorScheme.primary,
+        color: AppColors.primary,
         notes: <_Note>[
           _Note(
               title: 'Assignment 1',
@@ -191,7 +162,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
     setState(() {
       _allFolders.add(_Folder(
         folderName,
-        color: Theme.of(context).colorScheme.primary, // Default color for new folders
+        color: AppColors.primary, // Default color for new folders
         notes: <_Note>[],
       ));
       _filterFolders(); // Update the displayed list to include the new folder
@@ -297,10 +268,8 @@ class _MyNotesPageState extends State<MyNotesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -318,10 +287,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
                     child: Text(
                       'My Notes',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.title,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -344,38 +310,38 @@ class _MyNotesPageState extends State<MyNotesPage> {
                       height: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+                        color: AppColors.cardAlt,
                         borderRadius:
                             const BorderRadius.horizontal(left: Radius.circular(12)),
                       ),
-                      child: const Icon(Icons.search_rounded),
+                      child: const Icon(Icons.search_rounded, color: AppColors.textSecondary),
                     ),
                     Expanded(
                       child: TextField(
                         controller: _search,
+                        style: TextStyle(color: AppColors.textMain),
                         decoration: InputDecoration(
                           hintText: 'Search…',
+                          hintStyle: TextStyle(color: AppColors.textMuted),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                           border: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(
-                              color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
-                            ),
+                            borderSide: BorderSide(color: AppColors.cardAlt),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(
-                              color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
-                            ),
+                            borderSide: BorderSide(color: AppColors.cardAlt),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(color: cs.primary, width: 1.5),
+                            borderSide: BorderSide(color: AppColors.primary, width: 1.5),
                           ),
+                          filled: true,
+                          fillColor: AppColors.cardAlt,
                         ),
                       ),
                     ),
@@ -390,7 +356,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
               child: Container(
                 height: 40,
                 decoration: BoxDecoration(
-                  color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+                  color: AppColors.cardAlt,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -458,7 +424,6 @@ class _RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: onTap,
@@ -466,10 +431,10 @@ class _RoundIconButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+          color: AppColors.cardAlt,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Icon(icon),
+        child: Icon(icon, color: AppColors.textMain),
       ),
     );
   }
@@ -488,7 +453,6 @@ class _SegItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs = Theme.of(context).colorScheme;
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -497,25 +461,17 @@ class _SegItem extends StatelessWidget {
           duration: const Duration(milliseconds: 160),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: selected ? cs.surface : Colors.transparent,
+            color: selected ? AppColors.card : Colors.transparent,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: selected
-                  ? (Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white10
-                      : Colors.black12)
-                  : Colors.transparent,
+              color: selected ? AppColors.border : Colors.transparent,
             ),
           ),
           child: Text(
             label,
             style: TextStyle(
               fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-              color: selected
-                  ? cs.primary
-                  : (Theme.of(context).brightness == Brightness.dark
-                      ? const Color(0xFF92A4C9)
-                      : Colors.grey[700]),
+              color: selected ? AppColors.primary : AppColors.textSecondary,
             ),
           ),
         ),
@@ -591,7 +547,6 @@ class _FolderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -615,7 +570,7 @@ class _FolderCard extends StatelessWidget {
             aspectRatio: 4 / 3,
             child: Container(
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+                color: AppColors.cardAlt,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Stack(
@@ -648,19 +603,14 @@ class _FolderCard extends StatelessWidget {
               folder.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style:
-                  Theme.of(context).textTheme.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+              style: AppTextStyles.sectionTitle,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
             child: Text(
               '${folder.count} Notes',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF92A4C9)
-                        : Colors.grey[600],
-                  ),
+              style: AppTextStyles.small,
             ),
           ),
         ],
@@ -710,13 +660,10 @@ class _NewFolderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs = Theme.of(context).colorScheme;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        _showCreateFolderDialog(context); // Call the dialog when tapped
+        _showCreateFolderDialog(context);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -725,11 +672,11 @@ class _NewFolderCard extends StatelessWidget {
             aspectRatio: 4 / 3,
             child: Container(
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+                color: AppColors.cardAlt,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
-                child: Icon(Icons.add, size: 48, color: cs.primary),
+                child: Icon(Icons.add, size: 48, color: AppColors.primary),
               ),
             ),
           ),
@@ -740,10 +687,9 @@ class _NewFolderCard extends StatelessWidget {
               'New Folder',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: cs.primary,
-                  ),
+              style: AppTextStyles.sectionTitle.copyWith(
+                color: AppColors.primary,
+              ),
             ),
           ),
         ],
@@ -921,10 +867,8 @@ class _AllNotesViewState extends State<_AllNotesView> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs = Theme.of(context).colorScheme;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: Column(
         children: <Widget>[
           Padding(
@@ -933,9 +877,7 @@ class _AllNotesViewState extends State<_AllNotesView> {
               alignment: Alignment.centerLeft,
               child: Text(
                 '${_displayNotes.length} Notes',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: isDark ? const Color(0xFF92A4C9) : Colors.grey[700]),
+                style: AppTextStyles.sectionTitle,
               ),
             ),
           ),
@@ -944,10 +886,9 @@ class _AllNotesViewState extends State<_AllNotesView> {
                 ? Center(
                     child: Text(
                       'No notes found.',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: cs.primary),
+                      style: AppTextStyles.sectionTitle.copyWith(
+                        color: AppColors.primary,
+                      ),
                     ),
                   )
                 : ListView.builder(
@@ -990,10 +931,10 @@ class _AllNotesViewState extends State<_AllNotesView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showFolderSelectionDialog(context); // Show dialog to select folder first
+          _showFolderSelectionDialog(context);
         },
-        backgroundColor: cs.primary,
-        child: Icon(Icons.add_rounded, color: cs.onPrimary),
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add_rounded, color: AppColors.textMain),
       ),
     );
   }
@@ -1129,10 +1070,8 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs = Theme.of(context).colorScheme;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -1150,10 +1089,7 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
                     child: Text(
                       widget.folder.title,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.title,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -1176,38 +1112,38 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
                       height: double.infinity,
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
+                        color: AppColors.cardAlt,
                         borderRadius:
                             const BorderRadius.horizontal(left: Radius.circular(12)),
                       ),
-                      child: const Icon(Icons.search_rounded),
+                      child: const Icon(Icons.search_rounded, color: AppColors.textSecondary),
                     ),
                     Expanded(
                       child: TextField(
                         controller: _searchController,
+                        style: TextStyle(color: AppColors.textMain),
                         decoration: InputDecoration(
                           hintText: 'Search notes...',
+                          hintStyle: TextStyle(color: AppColors.textMuted),
                           contentPadding:
                               const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
                           border: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(
-                              color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
-                            ),
+                            borderSide: BorderSide(color: AppColors.cardAlt),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(
-                              color: isDark ? const Color(0xFF232F48) : const Color(0xFFD6D3D1),
-                            ),
+                            borderSide: BorderSide(color: AppColors.cardAlt),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 const BorderRadius.horizontal(right: Radius.circular(12)),
-                            borderSide: BorderSide(color: cs.primary, width: 1.5),
+                            borderSide: BorderSide(color: AppColors.primary, width: 1.5),
                           ),
+                          filled: true,
+                          fillColor: AppColors.cardAlt,
                         ),
                       ),
                     ),
@@ -1222,9 +1158,7 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '${_displayNotes.length} Notes',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: isDark ? const Color(0xFF92A4C9) : Colors.grey[700]),
+                  style: AppTextStyles.sectionTitle,
                 ),
               ),
             ),
@@ -1233,10 +1167,9 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
                   ? Center(
                       child: Text(
                         'No notes found.',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(color: cs.primary),
+                        style: AppTextStyles.sectionTitle.copyWith(
+                          color: AppColors.primary,
+                        ),
                       ),
                     )
                   : ListView.builder(
@@ -1277,8 +1210,8 @@ class _FolderDetailPageState extends State<FolderDetailPage> {
             ),
           );
         },
-        backgroundColor: cs.primary,
-        child: Icon(Icons.add_rounded, color: cs.onPrimary),
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.add_rounded, color: AppColors.textMain),
       ),
     );
   }
@@ -1292,38 +1225,33 @@ class _NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final DateFormat dateFormat = DateFormat('MMM d, yyyy HH:mm');
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      color: isDark ? const Color(0xFF232F48) : Colors.white,
+      color: AppColors.card,
       elevation: 0.5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          onNoteTap(note); // Call the new callback
+          onNoteTap(note);
         },
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: AppPaddings.card,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
                 note.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: AppTextStyles.sectionTitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 6),
               Text(
                 note.content,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: isDark ? const Color(0xFF92A4C9) : Colors.grey[700]),
+                style: AppTextStyles.body,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -1332,8 +1260,7 @@ class _NoteCard extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Text(
                   dateFormat.format(note.lastModified),
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: isDark ? const Color(0xFF92A4C9) : Colors.grey[500]),
+                  style: AppTextStyles.small,
                 ),
               ),
             ],
@@ -1383,10 +1310,8 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme cs = Theme.of(context).colorScheme;
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -1404,10 +1329,7 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
                     child: Text(
                       widget.noteToEdit == null ? 'New Note' : 'Edit Note',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.w700),
+                      style: AppTextStyles.title,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -1460,22 +1382,17 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
                       decoration: InputDecoration(
                         hintText: 'Title',
                         border: InputBorder.none,
-                        hintStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: isDark ? Colors.white54 : Colors.grey[600],
-                            ),
+                        hintStyle: AppTextStyles.title.copyWith(
+                          color: AppColors.textMuted,
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: isDark ? Colors.white : Colors.black,
-                          ),
+                      style: AppTextStyles.title,
                       maxLines: null,
                     ),
                     const SizedBox(height: 16),
                     Text(
                       'Folder: ${widget.folderTitle}',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: isDark ? const Color(0xFF92A4C9) : Colors.grey[500]),
+                      style: AppTextStyles.small,
                     ),
                     const SizedBox(height: 16),
                     TextField(
@@ -1483,13 +1400,11 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
                       decoration: InputDecoration(
                         hintText: 'Start typing your note here...',
                         border: InputBorder.none,
-                        hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              color: isDark ? Colors.white54 : Colors.grey[600],
-                            ),
+                        hintStyle: AppTextStyles.body.copyWith(
+                          color: AppColors.textMuted,
+                        ),
                       ),
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: isDark ? Colors.white70 : Colors.black87,
-                          ),
+                      style: AppTextStyles.body,
                       maxLines: null,
                     ),
                   ],
@@ -1520,8 +1435,8 @@ class _AddEditNotePageState extends State<AddEditNotePage> {
           }
           Navigator.of(context).pop();
         },
-        backgroundColor: cs.primary,
-        child: Icon(Icons.save_rounded, color: cs.onPrimary),
+        backgroundColor: AppColors.primary,
+        child: const Icon(Icons.save_rounded, color: AppColors.textMain),
       ),
     );
   }

@@ -1,31 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-class InstructorRatingsApp extends StatelessWidget {
-  const InstructorRatingsApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final Color seed = const Color(0xFF3A7BFA);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Instructor Ratings',
-      themeMode: ThemeMode.system,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: seed,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: const Color(0xFFF7F8FA),
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: seed,
-        brightness: Brightness.dark,
-      ),
-      home: const InstructorRatingsPage(),
-    );
-  }
-}
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 /// A private class to hold the dynamically updated global total rating sum and total review count for an instructor.
 class _InstructorDynamicData {
@@ -215,17 +192,18 @@ class InstructorRatingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
+        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textMain),
           onPressed: () {
             Navigator.pushReplacementNamed(context, '/courses');
           },
         ),
-        title: const Text('Instructor Ratings'), // Simplified title
+        title: Text('Instructor Ratings', style: AppTextStyles.title),
         actions: <Widget>[
-          // _CampusDropdown moved to actions with a small right padding
           const _CampusDropdown(),
           const SizedBox(width: 16),
         ],
@@ -235,8 +213,8 @@ class InstructorRatingsPage extends StatelessWidget {
           slivers: <Widget>[
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: const _FilterAndSortSection(), // Use the new widget here
+                padding: AppPaddings.screen,
+                child: const _FilterAndSortSection(),
               ),
             ),
             Consumer<InstructorRatingsData>(
@@ -298,14 +276,15 @@ class _FilterAndSortSectionState extends State<_FilterAndSortSection> {
           controller: _searchController,
           decoration: InputDecoration(
             hintText: 'Search by instructor name',
-            prefixIcon: const Icon(Icons.search),
+            hintStyle: TextStyle(color: AppColors.textMuted),
+            prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
             suffixIcon: _searchController.text.isNotEmpty
                 ? IconButton(
-                    icon: const Icon(Icons.clear),
+                    icon: const Icon(Icons.clear, color: AppColors.textSecondary),
                     onPressed: () {
                       _searchController.clear();
                       data.setSearchQuery('');
-                      FocusScope.of(context).unfocus(); // Dismiss keyboard
+                      FocusScope.of(context).unfocus();
                     },
                   )
                 : null,
@@ -314,8 +293,9 @@ class _FilterAndSortSectionState extends State<_FilterAndSortSection> {
               borderSide: BorderSide.none,
             ),
             filled: true,
-            fillColor: Theme.of(context).colorScheme.surface,
+            fillColor: AppColors.card,
           ),
+          style: TextStyle(color: AppColors.textMain),
           onChanged: (String value) {
             data.setSearchQuery(value);
           },
@@ -333,13 +313,14 @@ class _SortBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final InstructorRatingsData data = Provider.of<InstructorRatingsData>(context);
-    final TextTheme text = Theme.of(context).textTheme;
     return Row(
       children: <Widget>[
-        Text('Sort by', style: text.bodyMedium),
+        Text('Sort by', style: AppTextStyles.body),
         const SizedBox(width: 12),
         DropdownButton<String>(
           value: data.sort,
+          dropdownColor: AppColors.card,
+          style: TextStyle(color: AppColors.textMain),
           items: const <DropdownMenuItem<String>>[
             DropdownMenuItem<String>(value: 'Top Rated', child: Text('Top Rated')),
             DropdownMenuItem<String>(value: 'Most Reviews', child: Text('Most Reviews')),
@@ -348,10 +329,12 @@ class _SortBar extends StatelessWidget {
           onChanged: (String? v) => data.setSort(v),
         ),
         const Spacer(),
-        Text('Department', style: text.bodyMedium), // New label for department filter
+        Text('Department', style: AppTextStyles.body),
         const SizedBox(width: 12),
         DropdownButton<String>(
-          value: data.departmentFilter, // Use the new department filter state
+          value: data.departmentFilter,
+          dropdownColor: AppColors.card,
+          style: TextStyle(color: AppColors.textMain),
           items: const <DropdownMenuItem<String>>[
             DropdownMenuItem<String>(value: 'All Departments', child: Text('All Departments')),
             DropdownMenuItem<String>(value: 'FENS', child: Text('FENS')),
@@ -359,7 +342,7 @@ class _SortBar extends StatelessWidget {
             DropdownMenuItem<String>(value: 'FMAN', child: Text('FMAN')),
             DropdownMenuItem<String>(value: 'SL', child: Text('SL')),
           ],
-          onChanged: (String? v) => data.setDepartmentFilter(v), // Call the new setter
+          onChanged: (String? v) => data.setDepartmentFilter(v),
         ),
       ],
     );
@@ -373,7 +356,6 @@ class _InstructorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
     final InstructorRatingsData data = Provider.of<InstructorRatingsData>(context);
 
     // Get the rating explicitly set by the user, for the interactive stars.
@@ -385,21 +367,13 @@ class _InstructorCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: AppColors.card,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: isDark ? Colors.white10 : Colors.black12,
+          color: AppColors.border,
         ),
-        boxShadow: <BoxShadow>[
-          if (!isDark)
-            BoxShadow(
-              color: Colors.black.withAlpha(8),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-        ],
       ),
-      padding: const EdgeInsets.all(14),
+      padding: AppPaddings.card,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -417,8 +391,8 @@ class _InstructorCard extends StatelessWidget {
                 children: <Widget>[
                   _Stars(rating: displayRating), // Use the effective global average rating here
                   const SizedBox(height: 4),
-                  Text('$displayReviews reviews', // Use dynamic reviews here
-                      style: Theme.of(context).textTheme.bodySmall),
+                  Text('$displayReviews reviews',
+                      style: AppTextStyles.small),
                 ],
               ),
             ],
@@ -459,8 +433,8 @@ class _UserRatingStars extends StatelessWidget {
           },
           child: Icon(
             starValue <= currentRating ? Icons.star_rounded : Icons.star_border_rounded,
-            size: 24, // Slightly larger for interaction
-            color: Theme.of(context).colorScheme.primary,
+            size: 24,
+            color: AppColors.primary,
           ),
         );
       }),
@@ -493,17 +467,14 @@ class _NameAndDept extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(name,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                )),
-        const SizedBox(height: 2),
-        Text(dept, style: Theme.of(context).textTheme.bodyMedium),
-      ],
-    );
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(name, style: AppTextStyles.sectionTitle),
+          const SizedBox(height: 2),
+          Text(dept, style: AppTextStyles.body),
+        ],
+      );
   }
 }
 
@@ -526,7 +497,7 @@ class _Stars extends StatelessWidget {
         } else {
           iconData = Icons.star_border_rounded;
         }
-        return Icon(iconData, size: 18, color: Colors.amber);
+        return Icon(iconData, size: 18, color: AppColors.warning);
       }),
     );
   }
@@ -608,6 +579,8 @@ class _CampusDropdown extends StatelessWidget {
     return DropdownButtonHideUnderline(
       child: DropdownButton<String>(
         value: data.campus,
+        dropdownColor: AppColors.card,
+        style: TextStyle(color: AppColors.textMain),
         items: const <DropdownMenuItem<String>>[
           DropdownMenuItem<String>(value: 'All Campuses', child: Text('All Campuses')),
           DropdownMenuItem<String>(value: 'Sabancı', child: Text('Sabancı')),
