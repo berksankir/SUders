@@ -34,7 +34,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => Navigator.pop(context), // ✔️ Named uyumlu
         ),
         centerTitle: true,
         title: const Text(
@@ -50,7 +50,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // File uploader box
+                  // Upload Box
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(
@@ -91,7 +91,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                         Text(
                           'Supports PDF, DOCX, PPTX, JPG. Max 25MB.',
                           style: TextStyle(
-                            color: Colors.grey.shade400,
+                            color: Colors.grey,
                             fontSize: 13,
                           ),
                           textAlign: TextAlign.center,
@@ -100,9 +100,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                         SizedBox(
                           height: 44,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // Şimdilik sadece UI, dosya seçme yok
-                            },
+                            onPressed: () {},
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primary,
                               shape: RoundedRectangleBorder(
@@ -124,7 +122,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
 
                   const SizedBox(height: 20),
 
-                  // Course dropdown
+                  // COURSE DROPDOWN
                   const Text(
                     'Course',
                     style: TextStyle(
@@ -149,7 +147,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
 
                   const SizedBox(height: 16),
 
-                  // Term dropdown
+                  // TERM
                   const Text(
                     'Term',
                     style: TextStyle(
@@ -170,7 +168,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
 
                   const SizedBox(height: 16),
 
-                  // Description
+                  // DESCRIPTION
                   const Text(
                     'Description',
                     style: TextStyle(
@@ -187,7 +185,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                       hintText:
                           'Add a helpful description, e.g., Midterm 1 notes, key concepts...',
                       hintStyle: TextStyle(
-                        color: Colors.grey.shade500,
+                        color: Colors.grey,
                         fontSize: 13,
                       ),
                       filled: true,
@@ -214,7 +212,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
 
                   const SizedBox(height: 18),
 
-                  // Anonymous toggle
+                  // Anonymous Switch
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -251,7 +249,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                           onChanged: (val) {
                             setState(() => isAnonymous = val);
                           },
-                          activeColor: Colors.white,
+                          activeThumbColor: Colors.white,
                           activeTrackColor: primary,
                         ),
                       ],
@@ -262,7 +260,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
             ),
           ),
 
-          // Bottom button
+          // Bottom Button
           Positioned(
             left: 0,
             right: 0,
@@ -281,9 +279,7 @@ class _UploadNotesPageState extends State<UploadNotesPage> {
                 child: SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // Şimdilik sadece UI – backend yok
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primary,
                       shape: RoundedRectangleBorder(
@@ -343,12 +339,11 @@ class _DropdownField<T> extends StatelessWidget {
           style: const TextStyle(color: Colors.white, fontSize: 14),
           hint: Text(
             hintText,
-            style: TextStyle(color: Colors.grey.shade500, fontSize: 13),
+            style: TextStyle(color: Colors.grey, fontSize: 13),
           ),
           items: items
-              .map(
-                (e) => DropdownMenuItem<T>(value: e, child: Text(e.toString())),
-              )
+              .map((e) =>
+                  DropdownMenuItem<T>(value: e, child: Text(e.toString())))
               .toList(),
           onChanged: onChanged,
         ),
