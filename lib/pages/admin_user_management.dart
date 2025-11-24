@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:suders/pages/admin_dashboard_page.dart';
 
 class UserManagementPage extends StatefulWidget {
   const UserManagementPage({super.key});
@@ -102,7 +103,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
                 children: [
                   IconButton(
                     onPressed: () {
-                      Navigator.of(context).maybePop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const AdminDashboardScreen()),
+                      );
                     },
                     icon: const Icon(Icons.arrow_back),
                     color: isDark ? Colors.white : Colors.grey.shade900,
