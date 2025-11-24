@@ -58,7 +58,7 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             height: 48,
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).maybePop();
+                Navigator.pushReplacementNamed(context, '/courses');
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -80,18 +80,27 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
               ),
             ),
           ),
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: IconButton(
-              onPressed: () {
-                // settings action
-              },
-              icon: Icon(
-                Icons.settings,
-                size: 24,
+          TextButton.icon(
+            onPressed: () {
+              Navigator.pushNamed(context, '/admin/dashboard');
+            },
+            icon: Icon(
+              Icons.switch_account,
+              size: 18,
+              color: isDark ? Colors.white : const Color(0xFF4A4A4A),
+            ),
+            label: Text(
+              'Switch to Admin',
+              style: TextStyle(
+                fontSize: 12,
                 color: isDark ? Colors.white : const Color(0xFF4A4A4A),
+                fontWeight: FontWeight.w500,
               ),
+            ),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
           ),
         ],

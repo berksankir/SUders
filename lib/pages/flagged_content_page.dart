@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:suders/lib/utils/app_colors.dart';
-import 'package:suders/lib/utils/app_text_styles.dart';
-import 'package:suders/lib/utils/app_paddings.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class FlaggedItem {
   final String courseName;
@@ -72,10 +72,10 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textMain),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text('Flagged Content', style: TextStyle(color: AppColors.textMain, fontWeight: FontWeight.bold)),
+          icon: Icon(Icons.arrow_back, color: AppColors.textMain),
+        onPressed: () => Navigator.pop(context),
+      ),
+      title: Text('Flagged Content', style: TextStyle(color: AppColors.textMain, fontWeight: FontWeight.bold)),
       ),
       body: Padding(
         padding: AppPaddings.screen,
@@ -83,32 +83,32 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
           children: [
             TextField(
               controller: _searchController,
-              style: const TextStyle(color: AppColors.textMain),
+              style: TextStyle(color: AppColors.textMain),
               decoration: InputDecoration(
                 hintText: 'Search content',
-                hintStyle: const TextStyle(fontSize: 13, color: AppColors.textMuted),
+                hintStyle: TextStyle(fontSize: 13, color: AppColors.textMuted),
                 filled: true,
                 fillColor: AppColors.card,
-                prefixIcon: const Icon(Icons.search, size: 20, color: AppColors.textSecondary),
+                prefixIcon: Icon(Icons.search, size: 20, color: AppColors.textSecondary),
                 suffixIcon: _searchText.isEmpty
                     ? null
                     : IconButton(
-                  icon: const Icon(Icons.clear, size: 18, color: AppColors.textSecondary),
+                  icon: Icon(Icons.clear, size: 18, color: AppColors.textSecondary),
                   onPressed: () {
                     _searchController.clear();
                     setState(() => _searchText = '');
                   },
                 ),
                 border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: AppColors.borderSoft),
+                  borderSide: BorderSide(color: AppColors.borderSoft),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: AppColors.borderSoft),
+                  borderSide: BorderSide(color: AppColors.borderSoft),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: AppColors.primary),
+                  borderSide: BorderSide(color: AppColors.primary),
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
@@ -117,7 +117,7 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
             const SizedBox(height: 12),
             Expanded(
               child: items.isEmpty
-                  ? const Center(
+                  ? Center(
                 child: Text('No flagged content.', style: TextStyle(color: AppColors.textSecondary)),
               )
                   : ListView.builder(
@@ -137,18 +137,18 @@ class _FlaggedContentScreenState extends State<FlaggedContentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(item.courseName,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textMain)),
                         const SizedBox(height: 6),
                         Text(item.summary, style: AppTextStyles.body, maxLines: 3, overflow: TextOverflow.ellipsis),
                         const SizedBox(height: 8),
                         Row(
                           children: [
-                            const Icon(Icons.flag, size: 16, color: AppColors.danger),
+                            Icon(Icons.flag, size: 16, color: AppColors.danger),
                             const SizedBox(width: 6),
                             Expanded(
                               child: Text('Reason: ${item.reason}',
-                                  style: const TextStyle(fontSize: 12, color: AppColors.danger)),
+                                  style: TextStyle(fontSize: 12, color: AppColors.danger)),
                             ),
                           ],
                         ),

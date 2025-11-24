@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:suders/lib/utils/app_colors.dart';
-import 'package:suders/lib/utils/app_text_styles.dart';
-import 'package:suders/lib/utils/app_paddings.dart';
+import 'package:suders/utils/app_colors.dart';
+import 'package:suders/utils/app_text_styles.dart';
+import 'package:suders/utils/app_paddings.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   const AdminDashboardScreen({super.key});
@@ -18,12 +18,15 @@ class AdminDashboardScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
+        automaticallyImplyLeading: false,
         title: Text('Admin Dashboard', style: AppTextStyles.title),
         actions: [
           TextButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.switch_account, color: AppColors.textMain, size: 18),
-            label: const Text('Switch to User', style: TextStyle(color: AppColors.textMain)),
+            onPressed: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+            icon: Icon(Icons.switch_account, color: AppColors.textMain, size: 18),
+            label: Text('Switch to User', style: TextStyle(color: AppColors.textMain)),
           ),
         ],
       ),
@@ -121,7 +124,7 @@ class AdminDashboardScreen extends StatelessWidget {
                               color: AppColors.cardAlt,
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            child: const Icon(Icons.notifications, size: 20, color: AppColors.primary),
+                            child: Icon(Icons.notifications, size: 20, color: AppColors.primary),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -177,7 +180,7 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             value,
-            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textMain),
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.textMain),
           ),
         ],
       ),
