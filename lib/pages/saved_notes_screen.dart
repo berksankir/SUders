@@ -311,7 +311,7 @@ class _MyNotesPageState extends State<MyNotesPage> {
                 children: <Widget>[
                   _RoundIconButton(
                     icon: Icons.arrow_back_ios_new_rounded,
-                    onTap: () {},
+                    onTap: () => Navigator.of(context).pop(),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
