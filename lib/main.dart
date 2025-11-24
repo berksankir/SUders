@@ -13,7 +13,7 @@ import 'package:suders/pages/admin_course_management.dart';
 import 'package:suders/pages/admin_instructor_management.dart';
 import 'package:suders/pages/flagged_content_page.dart';
 import 'package:suders/pages/user_profile_screen.dart';
-import 'package:suders/pages/Saved_Notes_Screen.dart';
+import 'package:suders/pages/saved_notes_screen.dart';
 
 void main() {
   runApp(const SUDersApp());
