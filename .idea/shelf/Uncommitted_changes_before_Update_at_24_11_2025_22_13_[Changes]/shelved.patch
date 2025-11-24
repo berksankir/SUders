@@ -1,0 +1,132 @@
+Index: lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:flutter/material.dart';\r\n\r\n// pubspec.yaml'daki name ile aynı olmalı!\r\nimport 'package:suders/pages/login_page.dart';\r\nimport 'package:suders/pages/verification_page.dart';\r\nimport 'package:suders/pages/welcome_back_page.dart';\r\nimport 'package:suders/pages/courses_page.dart';\r\nimport 'package:suders/pages/course_notes_page.dart';\r\nimport 'package:suders/pages/upload_notes_page.dart';\r\n\r\nvoid main() {\r\n  runApp(const SUDersApp());\r\n}\r\n\r\nclass SUDersApp extends StatelessWidget {\r\n  const SUDersApp({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return MaterialApp(\r\n      debugShowCheckedModeBanner: false,\r\n      title: 'SUDers',\r\n      theme: ThemeData.dark(),\r\n\r\n      initialRoute: '/login',\r\n\r\n      routes: {\r\n        '/login': (context) => const LoginPage(),\r\n        '/verification': (context) => const VerificationPage(),\r\n        '/welcomeBack': (context) => const WelcomeBackPage(),\r\n        '/courses': (context) => const CoursesPage(),\r\n\r\n        // Sabit sayfa (parametre almayan)\r\n        '/uploadNotes': (context) => const UploadNotesPage(),\r\n      },\r\n\r\n      // PARAMETRE ALAN SAYFALAR → onGenerateRoute\r\n      onGenerateRoute: (settings) {\r\n        // COURSE NOTES PAGE → parametre alıyor\r\n        if (settings.name == '/courseNotes') {\r\n          final args = settings.arguments as Map<String, dynamic>;\r\n\r\n          return MaterialPageRoute(\r\n            builder: (context) => CourseNotesPage(\r\n              courseCode: args['courseCode'],\r\n              courseName: args['courseName'],\r\n            ),\r\n          );\r\n        }\r\n\r\n        return null;\r\n      },\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/lib/main.dart b/lib/main.dart
+--- a/lib/main.dart	(revision 739b2192b0c08da345c5b5ff750251bf5f220998)
++++ b/lib/main.dart	(date 1764011280394)
+@@ -1,4 +1,5 @@
+ import 'package:flutter/material.dart';
++import 'package:suders/pages/admin_dashboard_page.dart';
+ 
+ // pubspec.yaml'daki name ile aynı olmalı!
+ import 'package:suders/pages/login_page.dart';
+@@ -7,6 +8,14 @@
+ import 'package:suders/pages/courses_page.dart';
+ import 'package:suders/pages/course_notes_page.dart';
+ import 'package:suders/pages/upload_notes_page.dart';
++import 'pages/admin_dashboard_page.dart';
++import 'pages/flagged_content_page.dart';
++import 'pages/admin_user_management.dart';
++import 'pages/admin_course_management.dart';
++import 'pages/admin_instructor_management.dart';
++
++import 'package:flutter/material.dart';
++
+ 
+ void main() {
+   runApp(const SUDersApp());
+@@ -25,11 +34,15 @@
+       initialRoute: '/login',
+ 
+       routes: {
+-        '/login': (context) => const LoginPage(),
++        '/login': (context) => const AdminDashboardScreen(),
+         '/verification': (context) => const VerificationPage(),
+         '/welcomeBack': (context) => const WelcomeBackPage(),
+         '/courses': (context) => const CoursesPage(),
+-
++        '/admin': (context) => const AdminDashboardScreen(),
++        '/flagged': (context) => const FlaggedContentScreen(),
++        '/admin/users': (context) => const UserManagementPage(),
++        '/admin/courses': (context) => const ManageCoursesScreen(),
++        '/admin/instructors': (context) => const ManageInstructorsScreen(),
+         // Sabit sayfa (parametre almayan)
+         '/uploadNotes': (context) => const UploadNotesPage(),
+       },
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"NONE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"8cd87614-9a4b-41df-993a-73a71a329873\" name=\"Changes\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/modules.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/modules.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/lib/main.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/lib/main.dart\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/lib/pages/admin_course_management.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/lib/pages/admin_course_management.dart\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/lib/pages/admin_dashboard_page.dart\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/lib/pages/admin_dashboard_page.dart\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"aycaaydogdu\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\"><![CDATA[{\r\n  \"selectedUrlAndAccountId\": {\r\n    \"url\": \"https://github.com/berksankir/SUders.git\",\r\n    \"accountId\": \"16ad05b6-46ec-4fdc-adbf-b865e1398d12\"\r\n  }\r\n}]]></component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 5\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"35uw5QKTJo4hrF19lfKDozYPnhN\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;Flutter.admin_instructor_management.dart.executor&quot;: &quot;Run&quot;,\r\n    &quot;Flutter.admin_instuctor_management.dart.executor&quot;: &quot;Run&quot;,\r\n    &quot;Flutter.suders.executor&quot;: &quot;Run&quot;,\r\n    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,\r\n    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,\r\n    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,\r\n    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;/Users/ayca.aydogdu/Documents/GitHub/SUders&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;dart.settings&quot;,\r\n    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\" selected=\"Flutter.suders\">\r\n    <configuration name=\"admin_instructor_management.dart\" type=\"FlutterRunConfigurationType\" factoryName=\"Flutter\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"filePath\" value=\"$PROJECT_DIR$/lib/pages/admin_instructor_management.dart\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"suders\" type=\"FlutterRunConfigurationType\" factoryName=\"Flutter\">\r\n      <option name=\"filePath\" value=\"$PROJECT_DIR$/lib/main.dart\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <list>\r\n      <item itemvalue=\"Flutter.main.dart\" />\r\n      <item itemvalue=\"Flutter.suders\" />\r\n      <item itemvalue=\"Flutter.admin_instructor_management.dart\" />\r\n    </list>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Flutter.admin_instructor_management.dart\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"8cd87614-9a4b-41df-993a-73a71a329873\" name=\"Changes\" comment=\"\" />\r\n      <created>1763973080769</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1763973080769</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 739b2192b0c08da345c5b5ff750251bf5f220998)
++++ b/.idea/workspace.xml	(date 1764011504386)
+@@ -4,14 +4,7 @@
+     <option name="autoReloadType" value="NONE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="8cd87614-9a4b-41df-993a-73a71a329873" name="Changes" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/lib/pages/admin_course_management.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/admin_course_management.dart" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/lib/pages/admin_dashboard_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pages/admin_dashboard_page.dart" afterDir="false" />
+-    </list>
++    <list default="true" id="13163fb7-3d5c-4eb7-89ac-f8c02f0cd0fa" name="Changes" comment="Updated admin_dashboard_page.dart and flagged_content_page.dart." />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -19,22 +12,29 @@
+   </component>
+   <component name="ClangdSettings">
+     <option name="formatViaClangd" value="false" />
++  </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Dart File" />
++      </list>
++    </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "aycaaydogdu"
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;aycaaydogdu&quot;
+   }
+-}]]></component>
+-  <component name="GithubPullRequestsUISettings"><![CDATA[{
+-  "selectedUrlAndAccountId": {
+-    "url": "https://github.com/berksankir/SUders.git",
+-    "accountId": "16ad05b6-46ec-4fdc-adbf-b865e1398d12"
++}</component>
++  <component name="GithubPullRequestsUISettings">{
++  &quot;selectedUrlAndAccountId&quot;: {
++    &quot;url&quot;: &quot;https://github.com/berksankir/SUders.git&quot;,
++    &quot;accountId&quot;: &quot;16ad05b6-46ec-4fdc-adbf-b865e1398d12&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 5
+ }</component>
+@@ -93,4 +93,15 @@
+     </task>
+     <servers />
+   </component>
++  <component name="XDebuggerManager">
++    <breakpoint-manager>
++      <breakpoints>
++        <line-breakpoint enabled="true" type="Dart">
++          <url>file://$PROJECT_DIR$/lib/main.dart</url>
++          <line>10</line>
++          <option name="timeStamp" value="1" />
++        </line-breakpoint>
++      </breakpoints>
++    </breakpoint-manager>
++  </component>
+ </project>
+\ No newline at end of file
