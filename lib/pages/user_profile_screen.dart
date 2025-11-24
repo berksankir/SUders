@@ -189,9 +189,14 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
       return Expanded(
         child: GestureDetector(
           onTap: () {
-            setState(() {
-              _isUploadedTab = (label == 'My Uploaded Notes');
-            });
+            if (label == 'Saved Notes') {
+              // Navigate to Saved Notes screen
+              Navigator.pushNamed(context, '/savedNotes');
+            } else {
+              setState(() {
+                _isUploadedTab = (label == 'My Uploaded Notes');
+              });
+            }
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 150),
