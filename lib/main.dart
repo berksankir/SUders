@@ -15,6 +15,7 @@ import 'package:suders/pages/flagged_content_page.dart';
 import 'package:suders/pages/user_profile_screen.dart';
 import 'package:suders/pages/saved_notes_screen.dart' show MyNotesPage;
 import 'package:suders/pages/instructor_rating_screen.dart';
+import 'package:suders/pages/planner_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -45,6 +46,7 @@ class SUDersApp extends StatelessWidget {
           create: (_) => InstructorRatingsData(),
           child: const InstructorRatingsPage(),
         ),
+        '/planner': (context) => const AcademicCalendarPage(),
         
         // Admin routes
         '/admin/dashboard': (context) => const AdminDashboardScreen(),

@@ -76,7 +76,13 @@ class CoursesPage extends StatelessWidget {
                 },
               ),
               const SizedBox(width: 40),
-              const _NavItem(icon: Icons.edit_calendar, label: 'Planner'),
+              _NavItem(
+                icon: Icons.edit_calendar,
+                label: 'Planner',
+                onTap: () {
+                  Navigator.pushNamed(context, '/planner');
+                },
+              ),
               _NavItem(
                 icon: Icons.person,
                 label: 'Profile',
