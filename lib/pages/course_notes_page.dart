@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'upload_notes_page.dart';
 
 class CourseNotesPage extends StatefulWidget {
   final String courseCode;
@@ -19,7 +18,6 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
   String selectedYear = '2024-2025';
   String selectedTerm = 'Fall';
 
-  // Oy sayıları değişeceği için const değil
   final List<_Note> notes = [
     _Note(
       termLabel: '2025 Spring',
@@ -79,7 +77,6 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Year & Term dropdownları
                   Row(
                     children: [
                       Expanded(
@@ -118,7 +115,6 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                   ),
                   const SizedBox(height: 12),
 
-                  // Not kartları
                   Column(
                     children: [
                       for (final note in notes)
@@ -127,9 +123,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                           child: _NoteCard(
                             note: note,
                             cardColor: cardColor,
-                            onDownload: () {
-                              // şimdilik boş
-                            },
+                            onDownload: () {},
                             onUpvote: () {
                               setState(() {
                                 note.upVotes++;
@@ -149,7 +143,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
             ),
           ),
 
-          // Alttaki "Upload New Note" butonu
+          // ✅ NAMED ROUTE İLE UPLOAD'A GİDİYOR
           Positioned(
             left: 0,
             right: 0,
@@ -175,12 +169,7 @@ class _CourseNotesPageState extends State<CourseNotesPage> {
                   height: 48,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const UploadNotesPage(),
-                        ),
-                      );
+                      Navigator.pushNamed(context, '/uploadNotes');
                     },
                     icon: const Icon(Icons.add_circle_outline),
                     label: const Text(
