@@ -1,8 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-class VerificationPage extends StatelessWidget {
+//for the demo, we made the verification code  "111111" this is only for the demo and not the final form of verification page
+class VerificationPage extends StatefulWidget {
   const VerificationPage({super.key});
+
+  @override
+  State<VerificationPage> createState() => _VerificationPageState();
+}
+
+class _VerificationPageState extends State<VerificationPage> {
+  final List<TextEditingController> _controllers = List.generate(
+    6,
+    (_) => TextEditingController(),
+  );
+  final List<FocusNode> _focusNodes = List.generate(
+    6,
+    (_) => FocusNode(),
+  );
+  
+  static const String _demoCode = '111111';
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    super.dispose();
+  }
+
+  void _verifyCode() {
+    final enteredCode = _controllers.map((c) => c.text).join();
+    
+    if (enteredCode.length != 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter all 6 digits"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (enteredCode == _demoCode) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Verification successful!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+      // Navigate to welcome back page after a short delay
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/welcomeBack');
+        }
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Invalid verification code. Please try again."),
+          backgroundColor: Colors.red,
+        ),
+      );
+      // Clear all fields
+      for (var controller in _controllers) {
+        controller.clear();
+      }
+      // Focus on first field
+      _focusNodes[0].requestFocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +108,13 @@ class VerificationPage extends StatelessWidget {
                   width: 45,
                   height: 60,
                   child: TextFormField(
+                    controller: _controllers[index],
+                    focusNode: _focusNodes[index],
                     onChanged: (value) {
                       if (value.length == 1 && index < 5) {
-                        FocusScope.of(context).nextFocus();
+                        _focusNodes[index + 1].requestFocus();
+                      } else if (value.isEmpty && index > 0) {
+                        _focusNodes[index - 1].requestFocus();
                       }
                     },
                     textAlign: TextAlign.center,
@@ -78,7 +151,13 @@ class VerificationPage extends StatelessWidget {
                   style: TextStyle(color: Colors.grey[500]),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Code resent! Check your email."),
+                      ),
+                    );
+                  },
                   child: const Text(
                     "Resend",
                     style: TextStyle(
@@ -107,11 +186,7 @@ class VerificationPage extends StatelessWidget {
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Verification process...")),
-                  );
-                },
+                onPressed: _verifyCode,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF1061FF),
                   shape: RoundedRectangleBorder(
