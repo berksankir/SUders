@@ -13,7 +13,9 @@ import 'package:suders/pages/admin_course_management.dart';
 import 'package:suders/pages/admin_instructor_management.dart';
 import 'package:suders/pages/flagged_content_page.dart';
 import 'package:suders/pages/user_profile_screen.dart';
-import 'package:suders/pages/saved_notes_screen.dart';
+import 'package:suders/pages/saved_notes_screen.dart' show MyNotesPage;
+import 'package:suders/pages/instructor_rating_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const SUDersApp());
@@ -39,6 +41,10 @@ class SUDersApp extends StatelessWidget {
         '/uploadNotes': (context) => const UploadNotesPage(),
         '/profile': (context) => const SavedNotesScreen(),
         '/savedNotes': (context) => const MyNotesPage(),
+        '/instructors': (context) => ChangeNotifierProvider(
+          create: (_) => InstructorRatingsData(),
+          child: const InstructorRatingsPage(),
+        ),
         
         // Admin routes
         '/admin/dashboard': (context) => const AdminDashboardScreen(),

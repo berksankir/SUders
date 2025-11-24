@@ -68,7 +68,13 @@ class CoursesPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               const _NavItem(icon: Icons.school, label: 'Courses', isActive: true),
-              const _NavItem(icon: Icons.person_search, label: 'Instructors'),
+              _NavItem(
+                icon: Icons.person_search,
+                label: 'Instructors',
+                onTap: () {
+                  Navigator.pushNamed(context, '/instructors');
+                },
+              ),
               const SizedBox(width: 40),
               const _NavItem(icon: Icons.edit_calendar, label: 'Planner'),
               _NavItem(
