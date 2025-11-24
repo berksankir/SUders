@@ -7,6 +7,12 @@ import 'package:suders/pages/welcome_back_page.dart';
 import 'package:suders/pages/courses_page.dart';
 import 'package:suders/pages/course_notes_page.dart';
 import 'package:suders/pages/upload_notes_page.dart';
+import 'package:suders/pages/admin_dashboard_page.dart';
+import 'package:suders/pages/admin_user_management.dart';
+import 'package:suders/pages/admin_course_management.dart';
+import 'package:suders/pages/admin_instructor_management.dart';
+import 'package:suders/pages/flagged_content_page.dart';
+import 'package:suders/pages/user_profile_screen.dart';
 
 void main() {
   runApp(const SUDersApp());
@@ -29,9 +35,15 @@ class SUDersApp extends StatelessWidget {
         '/verification': (context) => const VerificationPage(),
         '/welcomeBack': (context) => const WelcomeBackPage(),
         '/courses': (context) => const CoursesPage(),
-
-        // Sabit sayfa (parametre almayan)
         '/uploadNotes': (context) => const UploadNotesPage(),
+        '/profile': (context) => const SavedNotesScreen(),
+        
+        // Admin routes
+        '/admin/dashboard': (context) => const AdminDashboardScreen(),
+        '/admin/users': (context) => const UserManagementPage(),
+        '/admin/courses': (context) => const ManageCoursesScreen(),
+        '/admin/instructors': (context) => const ManageInstructorsScreen(),
+        '/flagged': (context) => const FlaggedContentScreen(),
       },
 
       // PARAMETRE ALAN SAYFALAR → onGenerateRoute

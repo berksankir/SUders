@@ -66,12 +66,18 @@ class CoursesPage extends StatelessWidget {
           height: 72,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              _NavItem(icon: Icons.school, label: 'Courses', isActive: true),
-              _NavItem(icon: Icons.person_search, label: 'Instructors'),
-              SizedBox(width: 40),
-              _NavItem(icon: Icons.edit_calendar, label: 'Planner'),
-              _NavItem(icon: Icons.person, label: 'Profile'),
+            children: [
+              const _NavItem(icon: Icons.school, label: 'Courses', isActive: true),
+              const _NavItem(icon: Icons.person_search, label: 'Instructors'),
+              const SizedBox(width: 40),
+              const _NavItem(icon: Icons.edit_calendar, label: 'Planner'),
+              _NavItem(
+                icon: Icons.person,
+                label: 'Profile',
+                onTap: () {
+                  Navigator.pushNamed(context, '/profile');
+                },
+              ),
             ],
           ),
         ),
@@ -201,8 +207,8 @@ class _CourseCard extends StatelessWidget {
           context,
           '/courseNotes',
           arguments: {
-            'code': course.code,
-            'name': course.title,
+            'courseCode': course.code,    // Changed from 'code'
+            'courseName': course.title,   // Changed from 'name'
           },
         );
       },
@@ -291,11 +297,13 @@ class _NavItem extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool isActive;
+  final VoidCallback? onTap;
 
   const _NavItem({
     required this.icon,
     required this.label,
     this.isActive = false,
+    this.onTap,
   });
 
   @override
@@ -304,7 +312,7 @@ class _NavItem extends StatelessWidget {
 
     return Expanded(
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
