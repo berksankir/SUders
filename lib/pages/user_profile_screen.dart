@@ -111,8 +111,8 @@ class _SavedNotesScreenState extends State<SavedNotesScreen> {
             children: [
               const CircleAvatar(
                 radius: 32,
-                backgroundImage: NetworkImage(
-                  "https://lh3.googleusercontent.com/aida-public/AB6AXuCOkKjr4HxjTn7Y5P6sqH_gqOF12uJpUe7tveeMBWSThTeMVI2Ei4jTH9hazKvv0cjaBEpOILoKc1oKWssEPMgEb4kmBX6kt2k-3mYF-IVzTgLzbcf9Tl1i3d-G17fQJKk9zXxKGpZK52utZEsDG1pDJT5XaVjW_W3RCc11DPEZd-l2F1punbC93V8mjyE_mj_NcxRMfAFwtZnqrSeIDKjOkOCJwQ_8oy_PzvStYyc0SCFF4-i4PnXTGKtjNYM0z7Q_INUjJHn--t40",
+                backgroundImage: AssetImage(
+                  'assets/images/profile_picture.jpg',
                 ),
               ),
               const SizedBox(width: 16),
